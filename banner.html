@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Banner FaucetPay (fetch)</title>
+<style>
+  #tcLink { display:block; width:728px; height:90px; border:0; text-decoration:none; }
+  @media (max-width:767px) { #tcLink { width:320px; height:100px; } }
+  #tcContent { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+  .tc-fallback { width:100%; height:100%; background:#f3f3f3; display:flex; align-items:center; justify-content:center; color:#333; font-family:sans-serif; }
+</style>
+</head>
+<body>
+
+<a id="tcLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="Buka FaucetPay (referral)">
+  <div id="tcContent" aria-hidden="true">
+    <div class="tc-fallback">Memuat banner…</div>
+  </div>
+</a>
+
+<script>
+(function(){
+  // REFERRAL URL (ganti UTM sesuai channel)
+  var referralBase = 'https://faucetpay.io/?r=4289483';
+  var utm = {
+    utm_source: 'website',
+    utm_medium: 'banner',
+    utm_campaign: 'referral'
+  };
+  // build referral href
+  var params = new URLSearchParams(utm).toString();
+  var referralUrl = referralBase + '&' + params;
+
+  // remote banner HTML (pastikan tap-coin.de mengizinkan CORS)
+  var bannerUrl = 'https://tap-coin.de/banners/tc_728.html';
+  var timeoutMs = 6000;
+  var controller = new AbortController();
+  var signal = controller.signal;
+  var timedOut = false;
+
+  var tm = setTimeout(function(){
+    timedOut = true;
+    controller.abort();
+    showFallback();
+  }, timeoutMs);
+
+  fetch(bannerUrl, { method: 'GET', mode: 'cors', signal: signal })
+    .then(function(resp){
+      clearTimeout(tm);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.text();
+    })
+    .then(function(html){
+      var content = document.getElementById('tcContent');
+      content.innerHTML = html;
+      var anchor = document.getElementById('tcLink');
+      anchor.href = referralUrl;
+      anchor.setAttribute('aria-label', 'Buka FaucetPay (referral)');
+      // note: inline <script> from html won't run when inserted via innerHTML in many browsers
+    })
+    .catch(function(err){
+      if (!timedOut) clearTimeout(tm);
+      console.warn('Gagal memuat banner remote:', err);
+      showFallback();
+    });
+
+  function showFallback(){
+    var content = document.getElementById('tcContent');
+    content.innerHTML = '<div class="tc-fallback">Klik untuk kunjungi FaucetPay</div>';
+    document.getElementById('tcLink').href = referralUrl;
+  }
+})();
+</script>
+
+</body>
+</html>
