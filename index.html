@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Daftar FaucetPay lewat saya</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; line-height:1.5; margin:0; padding:24px; background:#f9fafb; color:#111; }
+  .container { max-width:900px; margin:0 auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,.06); }
+  h1 { font-size:1.4rem; margin:0 0 8px; }
+  p { margin:8px 0 16px; color:#333; }
+  .cta { display:inline-block; background:#0b74de; color:#fff; padding:12px 20px; border-radius:6px; text-decoration:none; font-weight:600; }
+  .note { font-size:0.9rem; color:#555; margin-top:12px; }
+  .examples { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+  .example { background:#f1f5f9; padding:10px; border-radius:6px; font-family:monospace; color:#0b3b6f; }
+  footer { margin-top:20px; font-size:0.85rem; color:#666; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Daftar FaucetPay (via referral)</h1>
+    <p>Daftar FaucetPay melalui link ini agar Anda bisa menggunakan wallet mikro untuk menerima micropayments dari faucet. Saya menyediakan panduan singkat dan dukungan jika ada kesulitan.</p>
+
+    <!-- CTA menggunakan track.php untuk mencatat klik sebelum redirect -->
+    <a class="cta" href="track.php?utm_source=landing&utm_medium=button&utm_campaign=referral" target="_blank" rel="noopener noreferrer">Daftar FaucetPay Sekarang</a>
+
+    <div class="note">
+      <strong>Disclosure:</strong> Ini link referral — saya mendapat kredit kecil jika Anda mendaftar melalui link ini. Gunakan sesuai kenyamanan.
+    </div>
+
+    <h3>Cara kerja</h3>
+    <ol>
+      <li>Anda klik tombol "Daftar FaucetPay Sekarang".</li>
+      <li>Klik dicatat (waktu, IP, user-agent, utm) untuk analitik sederhana.</li>
+      <li>Anda diarahkan ke halaman pendaftaran FaucetPay.</li>
+    </ol>
+
+    <h3>Embed banner (contoh)</h3>
+    <p>Jika Anda ingin memasang banner di situs lain, gunakan snippet <code>banner-wrapper.html</code> (iframe + overlay click) yang saya sediakan.</p>
+
+    <div class="examples">
+      <div class="example">Full referral: <br>https://faucetpay.io/?r=4289483&utm_source=landing&utm_medium=button&utm_campaign=referral</div>
+      <div class="example">Short (optional): <br>Ganti menggunakan tinyurl atau service lain</div>
+    </div>
+
+    <footer>
+      Pastikan server Anda mengizinkan penulisan ke file <code>clicks.csv</code> yang dibuat oleh <code>track.php</code>. Jika perlu saya bantu setting permission atau buat versi yang menyimpan ke database.
+    </footer>
+  </div>
+</body>
+</html>
